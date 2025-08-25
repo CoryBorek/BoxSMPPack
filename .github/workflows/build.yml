@@ -30,46 +30,13 @@ jobs:
       # Runs a single command using the runners shell
       - name: Set up Pack
         run: |
-          mkdir -p working/{pack,complete/pack}
-          cd working/pack || exit
-
-          rsync -a ../../assets assets
-          cp ../../pack.mcmeta pack.mcmeta
-          
           zip -r boxsmppack.zip assets pack.mcmeta
-          cd ../../
-         
-      - name: Set up Resource Pack Converter
-        run: |
-          mv working/pack/boxsmppack.zip working/complete/boxsmppack.zip
-          mkdir -p working/convert/template
-          cp working/complete/*.zip working/convert/template
-          wget https://github.com/agentdid127/ResourcePackConverter/releases/download/2.2.6/ResourcePackConverter.jar
-          mv ResourcePackConverter.jar ResourcePackConverter-Console-2.2.6.jar
-  
-     # - name: Convert Packs
-     #   run: |
-     #     cp -r working/convert/template working/convert/1_21_7
-     #     cd working/convert/1_21_7/
-     #     java -jar ../../../ResourcePackConverter-Console-*.jar --from 1.21.7 --to 1.21.8 --minify
-     #     rm hubpack.zip
-     #     rm creativepack.zip
-     #     mv hubpack_converted.zip ../../complete/hubpack-1.21.7.zip
-     #     mv creativepack_converted.zip ../../complete/creativepack-1.21.7.zip
-     #     cd ../../../
-          
-      - name: Set up targets
-        run: |
-          mv working/complete .
-          rm -rf working
-          rm -f ResourcePackConverter-*.jar
-
           echo 'VERSION='$(cat version.txt) >> $GITHUB_ENV
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ github.token }} # This token is provided by Actions, you do not need to create your own token
         with:
           tag_name: ${{ env.VERSION }}
           release_name: Release ${{ env.VERSION }}
@@ -82,9 +49,9 @@ jobs:
         id: upload-pack-release-1_21_8
         uses: actions/upload-release-asset@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-          asset_path: ./complete/boxsmppack.zip
+          asset_path: ./boxsmppack.zip
           asset_name: boxsmppack-1.21.8.zip
           asset_content_type: application/zip
