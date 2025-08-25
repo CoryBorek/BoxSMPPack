@@ -25,16 +25,14 @@ jobs:
         run: |
           zip -r boxsmppack.zip assets pack.mcmeta
           echo 'VERSION='$(cat version.txt) >> $GITHUB_ENV
-      - name: "Create release"
-        uses: aaronbarnaby/create-release-action@v1.0.0
+      - name: Create Release
+        uses: actions/create-release@v1
         with:
-          # GitHub secret token
-          api_token: ${{ secrets.GITHUB_TOKEN }}
-          # Git Tag (for auto releases)
-          release_tag: ${{ env.VERSION }}
-          # Instead of comparing to provided release_tag it will search for latest tagged release to compare too
-          compare_last_tagged_release: true
-          # Should this release be marked as a pre-release?
+          tag_name: ${{ env.VERSION }}
+          release_name: Release ${{ env.VERSION }}
+          draft: false
           prerelease: false
-          # Assets to upload to the release
-          files: "boxsmppack.zip"
+          file: boxsmppack.zip
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
