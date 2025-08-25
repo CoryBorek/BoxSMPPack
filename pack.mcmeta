@@ -1,0 +1,10 @@
+{
+    "pack":{
+        "pack_format":64,
+        "description":"§bBoxSMP Pack\n§f v0.1",
+        "supported_formats":{"min_inclusive":5,"max_inclusive":64}
+    },
+    "meta":{
+        "game_version":"1.21.8"
+    }
+}
