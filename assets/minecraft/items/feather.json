@@ -13,7 +13,7 @@
                     "model":"boxsmp/test",
                     "type": "model"
                 }
-            },
+            }
         ]
     }
 }

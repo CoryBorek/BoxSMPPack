@@ -1,7 +1,7 @@
 {
     "pack":{
         "pack_format":64,
-        "description":"§bBoxSMP Pack\n§f v0.1",
+        "description":"§bBoxSMP Pack\n§f v0.2",
         "supported_formats":{"min_inclusive":5,"max_inclusive":64}
     },
     "meta":{
