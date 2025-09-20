@@ -3,8 +3,8 @@
     [
         {
             "type":"directory",
-            "source":"hats",
-            "prefix":"hats/"
+            "source":"food",
+            "prefix":"food/"
         }
     ]
 }
